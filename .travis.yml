@@ -1,0 +1,26 @@
+dist: trusty
+sudo: true
+language: c
+addons:
+  apt:
+    packages:
+    - ccache
+before_install:
+- ssh-keyscan -H firehol.org >> ~/.ssh/known_hosts
+before_script:
+- ./setup.sh
+script:
+- for i in build-*.sh; do ./$i; done
+after_success:
+- "(cd output/packages && for i in *; do md5sum -b $i > ../checksums/$i.md5; sha512sum -b $i > ../checksums/$i.sha; done)"
+- cat output/checksums/*.md5
+deploy:
+  provider: releases
+  api_key:
+    secure: Dm4m/1CbOo+VJWl3zzYXrc8Vu+P2T4diiwJw04tKKXMsAZS0qL4n/yYUZUNAqWDWsKb/T6VUH/FpUFyXGnGtTrGhlX92SU3EG0W54MhMD9/MHw0Xd2EhMGjl4vPjjSnz5wYeMhGSTR0xvtU4gO2A1QPwReJ8roiEJECu8sPhsB7rBYH5SOOwq2DKUY3pnBKwum2USn+9QGwNjNa9TynuhwuTfgj7JG68cTjtjrtTsRVmuhjQOUgxwI3Hk52DkWp2Htj4lQkSOjdPNP6GLf3cab7rrSDwtpQvneBtFAB7OsAFLtD4/9rbRdzolNSUdp7+bAhtqsTdjGYHT9YYIwSdqk6X4SFtEayM9ww2CpIOhayIBzoUTIbBj2E83tpiTKesGjL7K7R1CgDByp8X7DV9q0WikR3K4pHfzQLO4riPLxcm4zmRY1K8XQxRAG/Jf2bExesduK3XvTfk+ZNLH7tKFRINhjIm6kagu7+VWzMTOiHwGdOkSB2q1xJQyKXlUF7xl6H9kSzH8Ynv4qpBBx3E+GZsVyRloFUG4gU8rD1tPvVSGZBhgaJ8kFIqB20GHcsRqzz2kBLe8FVVgzGcRPEqh/mrKPItnZ2lQpa8YQQISV5Xh2OQDGj49ufDjJZa0j8KbmI74qnn+Zvc88HxgfMCgtjdyTfxu70rw1P0lxJnAvs=
+  skip_cleanup: true
+  file_glob: true
+  file: "output/*/*.*"
+  on:
+    repo: firehol/packages
+    tags: true
