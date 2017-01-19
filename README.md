@@ -1,7 +1,8 @@
 # FireHOL packages
 
-This repository is intended to provide pre-built packages for distributions
-that do not have them as standard.
+This repository is intended to provide
+[pre-built packages](https://github.com/firehol/packages/releases/latest)
+for distributions that do not have them as standard.
 
 Current status:
 
@@ -54,5 +55,5 @@ builds OK, it builds checksums in `outputs/checksums`.
 ## Dependencies
 
 * The OpenWRT builds need ccache and basic build tools (make etc.) installed
-* The CentOS/Redhhat builds need docker (docker.io on Ubuntu) installed
+* The CentOS/Redhat builds need docker (docker.io on Ubuntu) installed
   and to be able to run sudo
