@@ -1,6 +1,8 @@
 dist: trusty
 sudo: true
 language: c
+services:
+  - docker
 addons:
   apt:
     packages:
@@ -12,7 +14,7 @@ before_script:
 script:
 - for i in build-*.sh; do ./$i; done
 after_success:
-- "(cd output/packages && for i in *; do md5sum -b $i > ../checksums/$i.md5; sha512sum -b $i > ../checksums/$i.sha; done)"
+- "(cd output/packages && for i in *; do md5sum -b $i > ../checksums/$i.md5; done)"
 - cat output/checksums/*.md5
 deploy:
   provider: releases

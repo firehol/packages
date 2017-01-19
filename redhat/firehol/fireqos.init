@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# Startup script to implement /etc/firehol/fireqos.conf pre-defined rules.
+#
+# chkconfig: - 20 80
+#
+# description: sets up QOS traffic control
+#
+# config: /etc/firehol/fireqos.conf
+exec /usr/sbin/fireqos "$@"

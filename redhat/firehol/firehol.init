@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# Startup script to implement /etc/firehol/firehol.conf pre-defined rules.
+#
+# chkconfig: - 20 80
+#
+# description: creates stateful iptables packet filtering firewalls.
+#
+# config: /etc/firehol/firehol.conf
+exec /usr/sbin/firehol "$@"

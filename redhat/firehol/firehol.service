@@ -1,0 +1,13 @@
+[Unit]
+Description=Firehol iptables stateful firewall
+Documentation=man:firehol(1) man:firehol.conf(5)
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/firehol start
+ExecStop=/usr/sbin/firehol stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

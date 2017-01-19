@@ -1,0 +1,13 @@
+[Unit]
+Description=FireQOS traffic shaping tool
+Documentation=man:fireqos(1) man:fireqos.conf(5)
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/fireqos start
+ExecStop=/usr/sbin/fireqos stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
