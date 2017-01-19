@@ -5,15 +5,15 @@ that do not have them as standard.
 
 Current status:
 
-Package                    Architecture      Installs   Runs   Works
--------------------------  ---------------- ---------- ------ -------
-FireHOL OpenWRT 15.05 ipk  all                  Y        Y       Y
-FireHOL CentOS/RHEL 6 rpm  all (noarch)         Y        ?       ?
-FireHOL CentOS/RHEL 7 rpm  all (noarch)         Y        ?       ?
-iprange OpenWRT 15.05 ipk  ar71xx               Y        Y       ?
-iprange OpenWRT 15.05 ipk  brcm47xx             ?        ?       ?
-iprange CentOS/RHEL 6 rpm  amd64                Y        ?       ?
-iprange CentOS/RHEL 7 rpm  amd64                Y        ?       ?
+Package                   | Architecture     |  Installs  |  Runs  |  Works
+------------------------- | ---------------- | ---------- | ------ | -------
+FireHOL OpenWRT 15.05 ipk | all              |     Y      |   Y    |    Y
+FireHOL CentOS/RHEL 6 rpm | all (noarch)     |     Y      |   ?    |    ?
+FireHOL CentOS/RHEL 7 rpm | all (noarch)     |     Y      |   ?    |    ?
+iprange OpenWRT 15.05 ipk | ar71xx           |     Y      |   Y    |    ?
+iprange OpenWRT 15.05 ipk | brcm47xx         |     ?      |   ?    |    ?
+iprange CentOS/RHEL 6 rpm | amd64            |     Y      |   ?    |    ?
+iprange CentOS/RHEL 7 rpm | amd64            |     Y      |   ?    |    ?
 
 Basically: I use FireHOL and FireQOS on an OpenWRT ar71xx box. I will update
 the table when people report success/failure.
