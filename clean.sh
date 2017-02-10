@@ -1,6 +1,5 @@
 #!/bin/sh
 
-rm -rf build
-rm -rf output
+sudo rm -rf build output
 
 exit 0
