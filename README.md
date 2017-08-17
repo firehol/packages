@@ -26,7 +26,14 @@ packaging formats, architectures, or updated versions are always welcome.
 
 Everything gets built by Travis-CI; tags are created after a package
 update or new output is added which automatically puts all the
-binaries into github releases.
+binaries into github releases:
+
+~~~~
+git push
+# wait...
+git tag YYYY-MM-DD-hhmm
+git push --tags
+~~~~
 
 # Building outside Travis
 
