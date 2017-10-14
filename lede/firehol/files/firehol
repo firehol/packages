@@ -1,0 +1,34 @@
+#!/bin/sh /etc/rc.common
+
+# The OpenWRT system uses this to determine start order for links to
+# create in /etc/rc.d when you run e.g. /etc/init.d/firehol enable
+START=15
+
+start() {
+  # Prior to FireHOL 3.1.0 we recommended saving a copy of your firewall
+  # for quick restoration. FireHOL now does this automatically provided
+  # /etc/firehol/firehol-defaults.conf has preference to restore over
+  # start: FIREHOL_RESTORE_INSTEAD_OF_START=1
+  # 
+  # Updates to any files under the config folder /etc/firehol result in a
+  # full start, with the changes saved automatially for restoring next time.
+  if [ ! -f /etc/firehol/firehol.conf ]
+  then
+    echo "Install /etc/firehol/firehol.conf"
+    echo "  (for an example, see /etc/firehol/firehol.conf.example)"
+    echo "test it with:"
+    echo "  firehol try"
+    echo "and then disable the default firewall:"
+    echo "  /etc/init.d/firewall disable"
+    exit 1
+  fi
+  /sbin/firehol start
+}
+
+restart() {
+  /sbin/firehol start
+}
+
+reload() {
+  /sbin/firehol start
+}

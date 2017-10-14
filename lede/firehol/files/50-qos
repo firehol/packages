@@ -1,0 +1,5 @@
+#!/bin/sh
+# Ensure QOS is restarted e.g. if PPP drops and reconnects
+[ "$ACTION" = ifup ] && {
+  test -f /etc/firehol/fireqos.conf && /sbin/fireqos start
+}
