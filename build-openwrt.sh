@@ -7,37 +7,28 @@ set -e
 FIREHOL_MD5=`cut -f1 -d' ' < build/firehol.md5`
 IPRANGE_MD5=`cut -f1 -d' ' < build/iprange.md5`
 
-# For each release, first architecture builds firehol # and iprange.
+# For each release, first architecture builds firehol and iprange.
 #
 # Subsequent arcitectures just build iprange. This is because firehol
 # is not actually architecture-dependent, we just need a way to get
 # it into a package, whereas iprange is a binary and must be compiled
 # for each target.
-#
-# General docs:
-#   https://wiki.openwrt.org/doc/devel/packages
-#   https://wiki.openwrt.org/doc/howto/obtain.firmware.sdk
-#
-# Once we have an SDK with the package dropped-in, at the top level
-# we can run the following:
-#   make
-#   make -j1 V=s
-#   make package/firehol/clean V=99
-#   make package/firehol/prepare V=99
-#   make package/firehol/configure V=99
-#   make package/firehol/compile V=99
-#   make package/firehol/install V=99
 
-mkdir -p build/chaos_calmer
-cd build/chaos_calmer
+osver=18.06
+mkdir -p build/openwrt-$osver
+cd build/openwrt-$osver
 rm -f build-list
+rm -f outputs
 
 while read short url sdk
 do
   if [ ! -d "$short" ]
   then
-    wget "$url/$sdk.tar.bz2"
-    tar xfj "$sdk.tar.bz2"
+    if [ ! -f "$sdk.tar.xz" ]
+    then
+      wget "$url/$sdk.tar.xz"
+    fi
+    tar xfJ "$sdk.tar.xz"
     mv "$sdk" "$short"
   fi
 
@@ -52,20 +43,34 @@ do
   sed -i -e "s;<<VER>>;$IPRANGE_VERSION;" -e "s;<<URL>>;$IPRANGE_URL;" -e "s;<<MD5>>;$IPRANGE_MD5;" "$short"/package/iprange/Makefile
   echo "$short" >> build-list
 done <<!
-ar71xx_generic https://downloads.openwrt.org/chaos_calmer/15.05.1/ar71xx/generic OpenWrt-SDK-15.05.1-ar71xx-generic_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64
-brcm47xx_generic https://downloads.openwrt.org/chaos_calmer/15.05.1/brcm47xx/generic OpenWrt-SDK-15.05.1-brcm47xx-generic_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64
+ar71xx_generic https://downloads.openwrt.org/releases/18.06.0/targets/ar71xx/generic openwrt-sdk-18.06.0-ar71xx-generic_gcc-7.3.0_musl.Linux-x86_64
+brcm47xx_generic https://downloads.openwrt.org/releases/18.06.0/targets/brcm47xx/generic openwrt-sdk-18.06.0-brcm47xx-generic_gcc-7.3.0_musl.Linux-x86_64
+ipq806x_generic https://downloads.openwrt.org/releases/18.06.0/targets/ipq806x/generic openwrt-sdk-18.06.0-ipq806x_gcc-7.3.0_musl_eabi.Linux-x86_64
 !
 
-while read target
+for t in `cat build-list`
 do
-  cd "$target"
-  make -j1 V=s
+  echo "build $t"
+  cd "$t"
+  # We don't want to build the kernel or modules
+  make -j1 V=s defconfig
+  rm -rf package/linux; touch .config
+  make -j1 V=s package/compile
   cd ..
-  find "$target" -name '*.ipk' >> outputs
-done < build-list
+  find "$t" -name '*.ipk' -a \! -name 'lib*.ipk' >> outputs
+done
 
 while read output
 do
-  outname=`basename "$output" | sed "s:\.ipk\$:_chaos_calmer.ipk:"`
+  short=`echo $output | cut -f1 -d'/'`
+  base=`basename "$output"`
+  case "$base" in
+    firehol*)
+       outname=`echo "$base" | sed "s:\.ipk\$:_${osver}_all.ipk:"`
+    ;;
+    *)
+       outname=`echo "$base" | sed "s:\.ipk\$:_${osver}_${short}.ipk:"`
+    ;;
+  esac
   cp "$output" "../../output/packages/$outname"
 done < outputs

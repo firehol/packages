@@ -9,18 +9,19 @@ Current status:
 Package                   | Architecture     |  Installs  |  Runs  |  Works
 ------------------------- | ---------------- | ---------- | ------ | -------
 FireHOL LEDE 17.01 ipk    | all              |     Y      |   Y    |    Y
-FireHOL OpenWRT 15.05 ipk | all              |     Y      |   Y    |    Y
+FireHOL OpenWRT 18.06 ipk | all              |     Y      |   Y    |    Y
 FireHOL CentOS/RHEL 6 rpm | all (noarch)     |     Y      |   ?    |    ?
 FireHOL CentOS/RHEL 7 rpm | all (noarch)     |     Y      |   ?    |    ?
 iprange LEDE 17.01 ipk    | ar71xx           |     Y      |   Y    |    ?
 iprange LEDE 17.01 ipk    | brcm47xx         |     ?      |   ?    |    ?
-iprange OpenWRT 15.05 ipk | ar71xx           |     Y      |   Y    |    ?
-iprange OpenWRT 15.05 ipk | brcm47xx         |     ?      |   ?    |    ?
+iprange OpenWRT 18.06 ipk | ar71xx           |     ?      |   ?    |    ?
+iprange OpenWRT 18.06 ipk | brcm47xx         |     ?      |   ?    |    ?
+iprange OpenWRT 18.06 ipk | ipq806x          |     ?      |   ?    |    ?
 iprange CentOS/RHEL 6 rpm | amd64            |     Y      |   ?    |    ?
 iprange CentOS/RHEL 7 rpm | amd64            |     Y      |   ?    |    ?
 
-Basically: I use FireHOL and FireQOS on an OpenWRT ar71xx box. I will update
-the table when people report success/failure.
+Basically: I run the builds but don't check them personally. I update this
+table when people report success/failure.
 
 It is all something of a best-effort basis, so pull requests to add new
 packaging formats, architectures, or updated versions are always welcome.
