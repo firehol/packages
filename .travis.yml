@@ -12,7 +12,7 @@ before_install:
 before_script:
 - ./setup.sh
 script:
-- for i in build-*.sh; do ./$i; done
+- for i in build-*.sh; do ./$i || exit 1; done
 after_success:
 - "(cd output/packages && for i in *; do md5sum -b $i > ../checksums/$i.md5; done)"
 - cat output/checksums/*.md5

@@ -158,6 +158,9 @@ fi
 %{_libexecdir}/firehol/%{version}/fireqos
 %{_libexecdir}/firehol/%{version}/functions.common
 %{_libexecdir}/firehol/%{version}/install.config
+%{_libexecdir}/firehol/%{version}/services.common
+%{_libexecdir}/firehol/%{version}/services.firehol
+%{_libexecdir}/firehol/%{version}/services.fireqos
 
 %changelog
 * Thu Jan 19 2017 Phil Whineray <phil@firehol.org> - 3.1.1-1
