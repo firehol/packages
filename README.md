@@ -8,12 +8,9 @@ Current status:
 
 Package                   | Architecture     |  Installs  |  Runs  |  Works
 ------------------------- | ---------------- | ---------- | ------ | -------
-FireHOL LEDE 17.01 ipk    | all              |     Y      |   Y    |    Y
-FireHOL OpenWRT 18.06 ipk | all              |     Y      |   Y    |    Y
+FireHOL OpenWRT 18.06 ipk | all              |     ?      |   ?    |    ?
 FireHOL CentOS/RHEL 6 rpm | all (noarch)     |     Y      |   ?    |    ?
 FireHOL CentOS/RHEL 7 rpm | all (noarch)     |     Y      |   ?    |    ?
-iprange LEDE 17.01 ipk    | ar71xx           |     Y      |   Y    |    ?
-iprange LEDE 17.01 ipk    | brcm47xx         |     ?      |   ?    |    ?
 iprange OpenWRT 18.06 ipk | ar71xx           |     ?      |   ?    |    ?
 iprange OpenWRT 18.06 ipk | brcm47xx         |     ?      |   ?    |    ?
 iprange OpenWRT 18.06 ipk | ipq806x          |     ?      |   ?    |    ?
