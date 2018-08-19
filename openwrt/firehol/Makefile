@@ -134,6 +134,9 @@ define Package/firehol/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/sbin/firehol $(1)/usr/lib/firehol/$(PKG_VERSION)
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/sbin/fireqos $(1)/usr/lib/firehol/$(PKG_VERSION)
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/sbin/functions.common $(1)/usr/lib/firehol/$(PKG_VERSION)
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/sbin/services.common $(1)/usr/lib/firehol/$(PKG_VERSION)
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/sbin/services.firehol $(1)/usr/lib/firehol/$(PKG_VERSION)
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/sbin/services.fireqos $(1)/usr/lib/firehol/$(PKG_VERSION)
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/sbin/install.config $(1)/usr/lib/firehol/$(PKG_VERSION)
 
 # Remove any programs that we do not expect to find and change
