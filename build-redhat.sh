@@ -21,6 +21,8 @@ FIREHOL_MD5=`cut -f1 -d' ' < build/firehol.md5`
 IPRANGE_MD5=`cut -f1 -d' ' < build/iprange.md5`
 NETDATA_MD5=`cut -f1 -d' ' < build/netdata.md5`
 
+IPRANGE_RELEASE="1"
+
 for v in 6 7
 do
   mkdir -p build/el${v}
@@ -77,9 +79,9 @@ do
     sudo docker rmi firehol-package-centos${v}-new
   fi
   sudo docker run -v `pwd`:/fh-build/centos${v}:rw firehol-package-centos${v} \
-              /bin/bash /fh-build/centos${v}/firehol/docker-build.sh
-  sudo docker run -v `pwd`:/fh-build/centos${v}:rw firehol-package-centos${v} \
               /bin/bash /fh-build/centos${v}/iprange/docker-build.sh
+  sudo docker run -v `pwd`:/fh-build/centos${v}:rw firehol-package-centos${v} \
+              /bin/bash -c "yum install -y /fh-build/centos${v}/iprange/rpmbuild/RPMS/x86_64/iprange-$IPRANGE_VERSION-$IPRANGE_RELEASE.el${v}.x86_64.rpm && /bin/bash /fh-build/centos${v}/firehol/docker-build.sh"
   sudo docker run -v `pwd`:/fh-build/centos${v}:rw firehol-package-centos${v} \
               /bin/bash /fh-build/centos${v}/netdata/docker-build.sh
   cd ../..

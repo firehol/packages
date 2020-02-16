@@ -13,6 +13,7 @@ Source1:        firehol.service
 Source2:        fireqos.service
 %endif
 BuildArch:      noarch
+BuildRequires:  iprange
 BuildRequires:  iproute
 BuildRequires:  ipset
 BuildRequires:  iptables
@@ -63,7 +64,6 @@ on all interfaces.
 %build
 %configure \
 	--disable-link-balancer \
-	--disable-update-ipsets \
 	--disable-vnetbuild
 make %{?_smp_mflags}
 
@@ -73,8 +73,10 @@ make %{?_smp_mflags} install DESTDIR="%{buildroot}"
 # Fixup the symlinks manually
 rm %{buildroot}/usr/sbin/firehol
 rm %{buildroot}/usr/sbin/fireqos
+rm %{buildroot}/usr/sbin/update-ipsets
 ln -s %{_libexecdir}/firehol/%{version}/firehol %{buildroot}/usr/sbin
 ln -s %{_libexecdir}/firehol/%{version}/fireqos %{buildroot}/usr/sbin
+ln -s %{_libexecdir}/firehol/%{version}/update-ipsets %{buildroot}/usr/sbin
 
 %if 0%{?rhel} > 0 && 0%{?rhel} < 7
 mkdir -p %{buildroot}%{_initrddir}
@@ -146,16 +148,19 @@ fi
 %endif
 %{_sbindir}/firehol
 %{_sbindir}/fireqos
+%{_sbindir}/update-ipsets
 %{_docdir}/firehol/html/*
 %{_docdir}/firehol/contrib/*
 %{_docdir}/firehol/examples/*
 %{_docdir}/firehol/*.pdf
 %{_mandir}/man1/*.1*
 %{_mandir}/man5/*.5*
+%{_datadir}/update-ipsets/webdir/*
 %dir %{_sysconfdir}/firehol/services/
 %{_localstatedir}/spool/firehol
 %{_libexecdir}/firehol/%{version}/firehol
 %{_libexecdir}/firehol/%{version}/fireqos
+%{_libexecdir}/firehol/%{version}/update-ipsets
 %{_libexecdir}/firehol/%{version}/functions.common
 %{_libexecdir}/firehol/%{version}/install.config
 %{_libexecdir}/firehol/%{version}/services.common
@@ -163,5 +168,7 @@ fi
 %{_libexecdir}/firehol/%{version}/services.fireqos
 
 %changelog
+* Sat Feb 15 2020 John Ramsden <johnramsden@riseup.net>
+- Enable update-ipsets
 * Thu Jan 19 2017 Phil Whineray <phil@firehol.org> - 3.1.1-1
 - Imported from final RedHat version, updated for v3.1.1 package
