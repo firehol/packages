@@ -168,7 +168,7 @@ fi
 %{_libexecdir}/firehol/%{version}/services.fireqos
 
 %changelog
-* Sat Feb 15 2020 John Ramsden <johnramsden@riseup.net>
+* Sat Feb 15 2020 John Ramsden <johnramsden@riseup.net> - 3.1.1-2
 - Enable update-ipsets
 * Thu Jan 19 2017 Phil Whineray <phil@firehol.org> - 3.1.1-1
 - Imported from final RedHat version, updated for v3.1.1 package
