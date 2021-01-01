@@ -8,13 +8,11 @@ Current status:
 
 Package                   | Architecture     |  Installs  |  Runs  |  Works
 ------------------------- | ---------------- | ---------- | ------ | -------
-FireHOL OpenWRT 18.06 ipk | all              |     ?      |   ?    |    ?
-FireHOL CentOS/RHEL 6 rpm | all (noarch)     |     Y      |   ?    |    ?
+FireHOL OpenWRT 19.07 ipk | all              |     ?      |   ?    |    ?
 FireHOL CentOS/RHEL 7 rpm | all (noarch)     |     Y      |   ?    |    ?
-iprange OpenWRT 18.06 ipk | ar71xx           |     ?      |   ?    |    ?
-iprange OpenWRT 18.06 ipk | brcm47xx         |     ?      |   ?    |    ?
-iprange OpenWRT 18.06 ipk | ipq806x          |     ?      |   ?    |    ?
-iprange CentOS/RHEL 6 rpm | amd64            |     Y      |   ?    |    ?
+iprange OpenWRT 19.07 ipk | ar71xx           |     ?      |   ?    |    ?
+iprange OpenWRT 19.07 ipk | brcm47xx         |     ?      |   ?    |    ?
+iprange OpenWRT 19.07 ipk | ipq806x          |     ?      |   ?    |    ?
 iprange CentOS/RHEL 7 rpm | amd64            |     Y      |   ?    |    ?
 
 Basically: I run the builds but don't check them personally. I update this
@@ -23,9 +21,18 @@ table when people report success/failure.
 It is all something of a best-effort basis, so pull requests to add new
 packaging formats, architectures, or updated versions are always welcome.
 
+# Old packages
+
+I couldn't get the CentOS/RHEL 6 packages build to work with Github
+actions. For the last built RPMs, see
+[here](https://github.com/firehol/packages/releases/tag/2020-03-19-1724).
+
+Last builds for OpenWRT 18.06 are
+[here](https://github.com/firehol/packages/releases/tag/2020-02-18-0552).
+
 # Releases
 
-Everything gets built by Travis-CI; tags are created after a package
+Everything gets built by Github Actions; tags are created after a package
 update or new output is added which automatically puts all the
 binaries into github releases:
 
@@ -36,7 +43,7 @@ git tag YYYY-MM-DD-hhmm
 git push --tags
 ~~~~
 
-# Building outside Travis
+# Building outside Github
 
 Clone the repository and run the common setup script:
 
@@ -57,8 +64,8 @@ Provided everything works, the outputs all go to `outputs/packages`.
 If something goes wrong you most likely need to install a
 [dependency](#dependencies) on your build host.
 
-Travis runs each `build-*.sh` script in order and provided everything
-builds OK, it builds checksums in `outputs/checksums`.
+Github Actions runs each `build-*.sh` script in order and provided
+everything builds OK, it builds checksums in `outputs/checksums`.
 
 ## Dependencies
 

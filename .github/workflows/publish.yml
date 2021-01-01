@@ -1,0 +1,116 @@
+on: [ push, pull_request, workflow_dispatch ]
+
+jobs:
+   prep:
+      runs-on: ubuntu-latest
+      name: Prepare build
+      steps:
+      - name: Extract tag/branch variables
+        shell: bash
+        run: |
+           echo "##[set-output name=tag;]$(echo ${GITHUB_REF#refs/tags/}|grep -v '/')"
+           echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/}|grep -v '/')"
+        id: extract
+      outputs:
+         tag: ${{ steps.extract.outputs.tag }}
+         branch: ${{ steps.extract.outputs.branch }}
+
+   build:
+      runs-on: ubuntu-latest
+      name: Build packages
+      needs: prep
+      steps:
+      - uses: actions/checkout@v2
+      - name: Set up build tools
+        run: ./.github/workflows/setup.sh
+      - name: Run build
+        run: |
+           ./setup.sh
+           for i in build-*.sh
+           do
+             ./$i || exit 1
+           done
+      - name: Create checksums
+        run: |
+           cd output/packages
+           for i in *
+           do
+              md5sum -b $i > ../checksums/$i.md5
+              sha512sum -b $i > ../checksums/$i.sha
+           done
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+           name: build-artifacts
+           path: |
+              output/packages/*
+              output/checksums/*
+
+   validate_build:
+      runs-on: ubuntu-latest
+      name: List build content if not tagged
+      needs: [ prep, build ]
+      if: ${{ needs.prep.outputs.tag == '' }}
+      steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+           name: build-artifacts
+      - name: List artifacts
+        run: ls -lR
+
+   publish_tag:
+      runs-on: ubuntu-latest
+      name: Publish to github if tag
+      needs: [ prep, build ]
+      if: ${{ needs.prep.outputs.tag != '' }}
+      steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+           name: build-artifacts
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+           tag_name: ${{ github.ref }}
+           release_name: Release ${{ github.ref }}
+           draft: false
+      - name: Upload packages
+        uses: actions/github-script@v3
+        with:
+           github-token: ${{secrets.GITHUB_TOKEN}}
+           script: |
+              const path = require('path');
+              const fs = require('fs');
+              const release_id = '${{ steps.create_release.outputs.id }}';
+              for (let file of await fs.readdirSync('./packages/')) {
+                 console.log('uploadReleaseAsset', file);
+                 await github.repos.uploadReleaseAsset({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    release_id: release_id,
+                    name: file,
+                    data: await fs.readFileSync(`./packages/${file}`)
+                 });
+              }
+      - name: Upload checksums
+        uses: actions/github-script@v3
+        with:
+           github-token: ${{secrets.GITHUB_TOKEN}}
+           script: |
+              const path = require('path');
+              const fs = require('fs');
+              const release_id = '${{ steps.create_release.outputs.id }}';
+              for (let file of await fs.readdirSync('./checksums/')) {
+                 console.log('uploadReleaseAsset', file);
+                 await github.repos.uploadReleaseAsset({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    release_id: release_id,
+                    name: file,
+                    data: await fs.readFileSync(`./checksums/${file}`)
+                 });
+              }

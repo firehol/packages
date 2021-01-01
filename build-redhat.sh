@@ -19,29 +19,25 @@ fi
 
 FIREHOL_MD5=`cut -f1 -d' ' < build/firehol.md5`
 IPRANGE_MD5=`cut -f1 -d' ' < build/iprange.md5`
-NETDATA_MD5=`cut -f1 -d' ' < build/netdata.md5`
 
-for v in 6 7
+for v in 7
 do
   mkdir -p build/el${v}
   cd build/el${v}
 
-  sudo rm -rf firehol/rpmbuild iprange/rpmbuild netdata/rpmbuild
-  rm -rf firehol iprange netdata
+  sudo rm -rf firehol/rpmbuild iprange/rpmbuild
+  rm -rf firehol iprange
   cp -rp ../../redhat/*.sh .
   cp -rp ../../redhat/firehol .
   cp -rp ../../redhat/iprange .
-  cp -rp ../../redhat/netdata .
 
   mkdir -p firehol/rpmbuild/SOURCES
   mkdir -p iprange/rpmbuild/SOURCES
-  mkdir -p netdata/rpmbuild/SOURCES
 
   cp ../firehol-$FIREHOL_VERSION.tar.bz2 firehol/rpmbuild/SOURCES
   cp firehol/*.service firehol/rpmbuild/SOURCES
   cp firehol/*.init firehol/rpmbuild/SOURCES
   cp ../iprange-$IPRANGE_VERSION.tar.bz2 iprange/rpmbuild/SOURCES
-  cp ../netdata-$NETDATA_VERSION.tar.bz2 netdata/rpmbuild/SOURCES
 
   sed -i -e "s;<<VER>>;$FIREHOL_VERSION;" -e "s;<<URL>>;$FIREHOL_URL;" -e "s;<<MD5>>;$FIREHOL_MD5;" -e "/Release:/s/%.*/$RPM_FIREHOL_RELEASE%{?dist}/" firehol/firehol.spec
   tar xfj ../iprange-$IPRANGE_VERSION.tar.bz2 iprange-$IPRANGE_VERSION/iprange.spec
@@ -49,10 +45,6 @@ do
   rmdir iprange-$IPRANGE_VERSION
   sed -i -e "s;_sbindir;_bindir;" -e '/^%files/a\
 %{_mandir}/man1/iprange.1.gz' -e "/Release:/s/%.*/$RPM_IPRANGE_RELEASE%{?dist}/" -e "/BuildRoot:/d" iprange/iprange.spec
-  tar xfj ../netdata-$NETDATA_VERSION.tar.bz2 netdata-$NETDATA_VERSION/netdata.spec
-  mv netdata-$NETDATA_VERSION/netdata.spec netdata/netdata.spec
-  rmdir netdata-$NETDATA_VERSION
-  sed -i -e "/^Recommends/d" -e "s/\.xz/\.bz2/" netdata/netdata.spec
 
   if ! sudo docker inspect firehol-package-centos${v} > /dev/null 2>&1
   then
@@ -80,8 +72,6 @@ do
               /bin/bash /fh-build/centos${v}/iprange/docker-build.sh
   sudo docker run -v `pwd`:/fh-build/centos${v}:rw firehol-package-centos${v} \
               /bin/bash -c "yum install -y /fh-build/centos${v}/iprange/rpmbuild/RPMS/x86_64/iprange-$IPRANGE_VERSION-$RPM_IPRANGE_RELEASE.el${v}.x86_64.rpm && /bin/bash /fh-build/centos${v}/firehol/docker-build.sh"
-  sudo docker run -v `pwd`:/fh-build/centos${v}:rw firehol-package-centos${v} \
-              /bin/bash /fh-build/centos${v}/netdata/docker-build.sh
   cd ../..
 done
 

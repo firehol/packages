@@ -19,15 +19,8 @@ then
   wget -O "iprange.md5" $IPRANGE_URL/iprange-$IPRANGE_VERSION.tar.bz2.md5
 fi
 
-if [ ! -f netdata.md5 ]
-then
-  wget $NETDATA_URL/netdata-$NETDATA_VERSION.tar.bz2
-  wget -O "netdata.md5" $NETDATA_URL/netdata-$NETDATA_VERSION.tar.bz2.md5
-fi
-
 md5sum -c firehol.md5
 md5sum -c iprange.md5
-md5sum -c netdata.md5
 
 cd ..
 rm -rf output
