@@ -17,15 +17,11 @@ cd build/x86_64-static
 
 cp -rp ../../x86_64-static/*.sh .
 
-sudo rm -rf iprange netdata
+sudo rm -rf iprange
 
 tar xfj ../iprange-$IPRANGE_VERSION.tar.bz2
 mv iprange-$IPRANGE_VERSION iprange
 cp -rp ../../x86_64-static/iprange/*.sh iprange
-
-tar xfj ../netdata-$NETDATA_VERSION.tar.bz2
-mv netdata-$NETDATA_VERSION netdata
-cp -rp ../../x86_64-static/netdata/*.sh netdata
 
 if ! sudo docker inspect firehol-package-x86_64-static > /dev/null 2>&1
 then
@@ -42,8 +38,6 @@ then
  fi
 sudo docker run -v `pwd`:/fh-build/x86_64-static:rw firehol-package-x86_64-static \
             /bin/sh /fh-build/x86_64-static/iprange/docker-build.sh
-sudo docker run -v `pwd`:/fh-build/x86_64-static:rw firehol-package-x86_64-static \
-            /bin/sh /fh-build/x86_64-static/netdata/docker-build.sh
 cd ../..
 
 if [ "$USER" ]
