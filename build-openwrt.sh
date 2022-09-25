@@ -14,7 +14,10 @@ IPRANGE_MD5=`cut -f1 -d' ' < build/iprange.md5`
 # it into a package, whereas iprange is a binary and must be compiled
 # for each target.
 
-osver=19.07
+osver=22.03
+fullver=22.03.0
+gccver=11.2.0
+
 mkdir -p build/openwrt-$osver
 cd build/openwrt-$osver
 rm -f build-list
@@ -43,9 +46,8 @@ do
   sed -i -e "s;<<VER>>;$IPRANGE_VERSION;" -e "s;<<URL>>;$IPRANGE_URL;" -e "s;<<MD5>>;$IPRANGE_MD5;" "$short"/package/iprange/Makefile
   echo "$short" >> build-list
 done <<!
-ar71xx_generic https://downloads.openwrt.org/releases/19.07.2/targets/ar71xx/generic openwrt-sdk-19.07.2-ar71xx-generic_gcc-7.5.0_musl.Linux-x86_64
-brcm47xx_generic https://downloads.openwrt.org/releases/19.07.2/targets/brcm47xx/generic openwrt-sdk-19.07.2-brcm47xx-generic_gcc-7.5.0_musl.Linux-x86_64
-ipq806x_generic https://downloads.openwrt.org/releases/19.07.2/targets/ipq806x/generic openwrt-sdk-19.07.2-ipq806x-generic_gcc-7.5.0_musl_eabi.Linux-x86_64
+bcm47xx_generic https://downloads.openwrt.org/releases/$fullver/targets/bcm47xx/generic openwrt-sdk-${fullver}-bcm47xx-generic_gcc-${gccver}_musl.Linux-x86_64
+ipq806x_generic https://downloads.openwrt.org/releases/$fullver/targets/ipq806x/generic openwrt-sdk-${fullver}-ipq806x-generic_gcc-${gccver}_musl_eabi.Linux-x86_64
 !
 
 for t in `cat build-list`

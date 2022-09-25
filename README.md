@@ -8,11 +8,10 @@ Current status:
 
 Package                   | Architecture     |  Installs  |  Runs  |  Works
 ------------------------- | ---------------- | ---------- | ------ | -------
-FireHOL OpenWRT 19.07 ipk | all              |     ?      |   ?    |    ?
+FireHOL OpenWRT 22.03 ipk | all              |     ?      |   ?    |    ?
 FireHOL CentOS/RHEL 7 rpm | all (noarch)     |     Y      |   ?    |    ?
-iprange OpenWRT 19.07 ipk | ar71xx           |     ?      |   ?    |    ?
-iprange OpenWRT 19.07 ipk | brcm47xx         |     ?      |   ?    |    ?
-iprange OpenWRT 19.07 ipk | ipq806x          |     ?      |   ?    |    ?
+iprange OpenWRT 22.03 ipk | bcm47xx          |     ?      |   ?    |    ?
+iprange OpenWRT 22.03 ipk | ipq806x          |     ?      |   ?    |    ?
 iprange CentOS/RHEL 7 rpm | amd64            |     Y      |   ?    |    ?
 
 Basically: I run the builds but don't check them personally. I update this
