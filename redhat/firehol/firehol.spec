@@ -1,6 +1,6 @@
 Name:           firehol
 Version:        <<VER>>
-Release:        1%{?dist}
+Release:        %{?dist}
 Summary:        Simple and powerful firewall and traffic shaping languages
 License:        GPLv2+
 URL:            http://firehol.org
