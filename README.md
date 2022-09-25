@@ -10,7 +10,7 @@ Package                   | Architecture     |  Installs  |  Runs  |  Works
 ------------------------- | ---------------- | ---------- | ------ | -------
 FireHOL OpenWRT 22.03 ipk | all              |     ?      |   ?    |    ?
 FireHOL CentOS/RHEL 8 rpm | all (noarch)     |     ?      |   ?    |    ?
-FireHOL CentOS/RHEL 8 rpm | all (noarch)     |     ?      |   ?    |    ?
+FireHOL CentOS/RHEL 9 rpm | all (noarch)     |     ?      |   ?    |    ?
 iprange OpenWRT 22.03 ipk | bcm47xx          |     ?      |   ?    |    ?
 iprange OpenWRT 22.03 ipk | ipq806x          |     ?      |   ?    |    ?
 iprange CentOS/RHEL 8 rpm | amd64            |     ?      |   ?    |    ?
@@ -24,9 +24,14 @@ packaging formats, architectures, or updated versions are always welcome.
 
 # Old packages
 
-I couldn't get the CentOS/RHEL 6 packages build to work with Github
-actions. For the last built RPMs, see
+CentOS7/RHEL 7 package build no longer works. Last built RPMs are
+[here](https://github.com/firehol/packages/releases/tag/2021-01-01-1948).
+
+CentOS6/RHEL 6 package build no longer works. Last built RPMs are
 [here](https://github.com/firehol/packages/releases/tag/2020-03-19-1724).
+
+Last builds for OpenWRT 19.07 (and last ar71xx build) are
+[here](https://github.com/firehol/packages/releases/tag/2021-01-01-1948).
 
 Last builds for OpenWRT 18.06 are
 [here](https://github.com/firehol/packages/releases/tag/2020-02-18-0552).
