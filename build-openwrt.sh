@@ -59,7 +59,7 @@ do
   rm -rf package/linux; touch .config
   make -j1 V=s package/compile
   cd ..
-  find "$t" -name '*.ipk' -a \! -name 'lib*.ipk' >> outputs
+  find "$t" -name '*.ipk' -a \! -name 'lib*.ipk' -a \! -name 'kmod*.ipk' -a \! -name 'kernel*.ipk' >> outputs
 done
 
 while read output
