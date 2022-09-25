@@ -20,7 +20,7 @@ fi
 FIREHOL_MD5=`cut -f1 -d' ' < build/firehol.md5`
 IPRANGE_MD5=`cut -f1 -d' ' < build/iprange.md5`
 
-for v in 7
+for v in 7 8 9
 do
   mkdir -p build/el${v}
   cd build/el${v}
@@ -52,7 +52,12 @@ do
     #   sudo docker rm -v $(sudo docker ps -a -q -f status=exited)
     #   sudo docker rmi firehol-package-centos6
     #   sudo docker rmi firehol-package-centos7
-    sudo docker run -v `pwd`:/fh-build/centos${v}:rw centos:centos${v} \
+    BASE_IMAGE_NAME="centos:centos{$v}"
+    if [ "${v}" != "7" ]
+    then
+      BASE_IMAGE_NAME="rockylinux:${v}"
+    fi
+    sudo docker run -v `pwd`:/fh-build/centos${v}:rw ${BASE_IMAGE_NAME} \
                 /bin/bash /fh-build/centos${v}/docker-setup.sh
     id=`sudo docker ps -l -q`
     sudo docker commit $id firehol-package-centos${v}
