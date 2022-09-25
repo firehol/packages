@@ -9,10 +9,12 @@ Current status:
 Package                   | Architecture     |  Installs  |  Runs  |  Works
 ------------------------- | ---------------- | ---------- | ------ | -------
 FireHOL OpenWRT 22.03 ipk | all              |     ?      |   ?    |    ?
-FireHOL CentOS/RHEL 7 rpm | all (noarch)     |     Y      |   ?    |    ?
+FireHOL CentOS/RHEL 8 rpm | all (noarch)     |     ?      |   ?    |    ?
+FireHOL CentOS/RHEL 8 rpm | all (noarch)     |     ?      |   ?    |    ?
 iprange OpenWRT 22.03 ipk | bcm47xx          |     ?      |   ?    |    ?
 iprange OpenWRT 22.03 ipk | ipq806x          |     ?      |   ?    |    ?
-iprange CentOS/RHEL 7 rpm | amd64            |     Y      |   ?    |    ?
+iprange CentOS/RHEL 8 rpm | amd64            |     ?      |   ?    |    ?
+iprange CentOS/RHEL 9 rpm | amd64            |     ?      |   ?    |    ?
 
 Basically: I run the builds but don't check them personally. I update this
 table when people report success/failure.

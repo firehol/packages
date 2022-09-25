@@ -20,7 +20,7 @@ fi
 FIREHOL_MD5=`cut -f1 -d' ' < build/firehol.md5`
 IPRANGE_MD5=`cut -f1 -d' ' < build/iprange.md5`
 
-for v in 7 8 9
+for v in 8 9
 do
   mkdir -p build/el${v}
   cd build/el${v}
