@@ -16,8 +16,15 @@ BuildArch:      noarch
 BuildRequires:  iprange
 BuildRequires:  iproute
 BuildRequires:  ipset
+%if 0%{?rhel} > 0 && 0%{?rhel} < 7
 BuildRequires:  iptables
 BuildRequires:  iptables-ipv6
+BuildRequires:  procps-ng
+BuildRequires:	iproute-tc
+%else
+BuildRequires:  iptables-services
+BuildRequires:	kmod
+%endif
 BuildRequires:  tcpdump
 %if 0%{?rhel} > 0 && 0%{?rhel} < 7
 %else
@@ -29,8 +36,15 @@ Requires:       grep
 Requires:       gzip
 Requires:       ipset
 Requires:       iproute
+%if 0%{?rhel} > 0 && 0%{?rhel} < 7
 Requires:       iptables
 Requires:       iptables-ipv6
+%else
+Requires:       iptables-services
+Requires:       kmod
+Requires:	procps-ng
+Requires:	iproute-tc
+%endif
 Requires:       less
 Requires:       sed
 Requires:       util-linux
