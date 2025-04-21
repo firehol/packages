@@ -8,8 +8,8 @@ jobs:
       - name: Extract tag/branch variables
         shell: bash
         run: |
-           echo "##[set-output name=tag;]$(echo ${GITHUB_REF#refs/tags/}|grep -v '/')"
-           echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/}|grep -v '/')"
+           echo "tag=$(echo ${GITHUB_REF#refs/tags/}|grep -v '/')" >> $GITHUB_OUTPUT
+           echo "branch=$(echo ${GITHUB_REF#refs/heads/}|grep -v '/')" >> $GITHUB_OUTPUT
         id: extract
       outputs:
          tag: ${{ steps.extract.outputs.tag }}
@@ -20,7 +20,7 @@ jobs:
       name: Build packages
       needs: prep
       steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up build tools
         run: ./.github/workflows/setup.sh
       - name: Run build
@@ -39,7 +39,7 @@ jobs:
               sha512sum -b $i > ../checksums/$i.sha
            done
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
            name: build-artifacts
            path: |
@@ -53,7 +53,7 @@ jobs:
       if: ${{ needs.prep.outputs.tag == '' }}
       steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
            name: build-artifacts
       - name: List artifacts
@@ -66,7 +66,7 @@ jobs:
       if: ${{ needs.prep.outputs.tag != '' }}
       steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
            name: build-artifacts
       - name: Create Release
